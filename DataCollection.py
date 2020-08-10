@@ -46,7 +46,8 @@ def location_dict(soup,state) -> dict:
                 if locations[temp] == None:
                     locations[temp] = [current.get_text()]
                 else:
-                    locations[temp] = [locations[temp][0] + current.get_text()]
+                    if type(locations) == list:
+                        locations[temp] = [locations[temp][0] + current.get_text()]
             elif current.name == "ul":
                 if locations[temp] == None:
                     locations[temp] = {}
@@ -142,12 +143,12 @@ def get_coordinates(address_list,file_name):
 # Didn't include Minnesota
 
 if __name__ == "__main__":
-    state_list = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New_Hampshire', 'New_Jersey', 'New_Mexico', 'New_York_(state)', 'North_Carolina', 'North_Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode_Island', 'South_Carolina', 'South_Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington_(state)', 'West_Virginia', 'Wisconsin', 'Wyoming']
-
+    #state_list = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New_Hampshire', 'New_Jersey', 'New_Mexico', 'New_York_(state)', 'North_Carolina', 'North_Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode_Island', 'South_Carolina', 'South_Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington_(state)', 'West_Virginia', 'Wisconsin', 'Wyoming']
+    state_list = ['Minnesota']
 
     for x in trange(len(state_list)):
         state = state_list[x]
-        file_name = "generalList.txt"
+        file_name = "Data.txt"
 
         res = requests.get("https://en.wikipedia.org/wiki/George_Floyd_protests_in_"+ state)
         soup = BeautifulSoup(res.text,"html.parser")
